@@ -1,7 +1,5 @@
 package inventory;
 
-import model.Beverage;
-
 import java.util.HashMap;
 import java.util.Map;
 
@@ -11,7 +9,7 @@ import java.util.Map;
  */
 
 public class InventoryManager {
-    public HashMap<String, Integer> inventory = new HashMap<>();
+    public Map<String, Integer> inventory = new HashMap<>();
 
     private InventoryManager() {
     }
@@ -25,32 +23,12 @@ public class InventoryManager {
         return InventoryManagerHolder.instance;
     }
 
-    //Making this thread safe by synchronizing
-    public synchronized boolean checkAndUpdateInventory(Beverage beverage) {
-        Map<String, Integer> requiredIngredientMap = beverage.getIngredientQuantityMap();
-        boolean isPossible = true;
+    public int get(String ingredient) {
+        return inventory.getOrDefault(ingredient, -1);
+    }
 
-        for (String ingredient : requiredIngredientMap.keySet()) {
-            int ingredientInventoryCount = inventory.getOrDefault(ingredient, -1);
-            if (ingredientInventoryCount == -1 || ingredientInventoryCount == 0) {
-                System.out.println(beverage.getName() + " cannot be prepared because " + ingredient + " is not available");
-                isPossible = false;
-                break;
-            } else if (requiredIngredientMap.get(ingredient) > ingredientInventoryCount) {
-                System.out.println(beverage.getName() + " cannot be prepared because " + ingredient + " is not sufficient");
-                isPossible = false;
-                break;
-            }
-        }
-
-        if (isPossible) {
-            for (String ingredient : requiredIngredientMap.keySet()) {
-                int existingInventory = inventory.getOrDefault(ingredient, 0);
-                inventory.put(ingredient, existingInventory - requiredIngredientMap.get(ingredient));
-            }
-        }
-
-        return isPossible;
+    public void reduceQuantity(String ingredient, int quantityToDeduct) {
+        inventory.put(ingredient, inventory.getOrDefault(ingredient, 0) - quantityToDeduct);
     }
 
     public void addInventory(String ingredient, int quantity) {
@@ -58,7 +36,6 @@ public class InventoryManager {
         inventory.put(ingredient, existingInventory + quantity);
     }
 
-    //Used only for testing
     public void resetInventory() {
         inventory.clear();
     }

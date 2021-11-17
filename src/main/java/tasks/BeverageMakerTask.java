@@ -1,24 +1,16 @@
 package tasks;
 
-import inventory.InventoryManager;
+import lombok.AllArgsConstructor;
 import model.Beverage;
+
 /**This class represents an atomic task to make any Beverage.
  * Uses Runnable interface to support multithreading */
 
-public class BeverageMakerTask implements Runnable {
+@AllArgsConstructor
+public abstract class BeverageMakerTask implements Runnable {
     private Beverage beverage;
 
-    BeverageMakerTask(Beverage beverage) {
-        this.beverage = beverage;
-    }
-
-    @Override
-    public void run() {
-        if (InventoryManager.getInstance().checkAndUpdateInventory(beverage)) {
-            System.out.println(beverage.getName() + " is prepared");
-        }
-
-    }
+    public abstract void run();
 
     @Override
     public String toString() {

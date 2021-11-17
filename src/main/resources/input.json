@@ -1,7 +1,7 @@
 {
   "machine": {
     "outlets": {
-      "count_n": 3
+      "count_n": 2
     },
     "total_items_quantity": {
       "hot_water": 500,
