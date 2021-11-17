@@ -1,4 +1,3 @@
-import inventory.InventoryManager;
 import java.util.HashMap;
 import java.util.Map;
 import model.CoffeeMachineDetails;
@@ -9,7 +8,7 @@ import org.junit.Test;
 import service.CoffeeMachine;
 
 import java.lang.reflect.Field;
-import service.FileLoader;
+import utility.FileLoader;
 
 public class CoffeeMachineFunctionalTest {
 

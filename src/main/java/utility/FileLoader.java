@@ -1,10 +1,14 @@
-package service;
+package utility;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
 import java.io.File;
 import java.io.IOException;
 import java.util.Scanner;
+import service.CoffeeMachine;
 
+/**
+ * Utility to convert any json to respective class object.
+ */
 public class FileLoader<T> {
     public T loadData(String fileName, Class<T> clazz) throws IOException {
         File file = new File(CoffeeMachine.class.getClassLoader().getResource(fileName).getFile());

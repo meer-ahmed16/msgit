@@ -1,7 +1,7 @@
 package service;
 
 import error.handler.ErrorHandler;
-import inventory.InventoryManager;
+import ingredientInventory.IngredientManager;
 import lombok.SneakyThrows;
 import lombok.extern.slf4j.Slf4j;
 import model.Beverage;
@@ -37,16 +37,16 @@ public class CoffeeMachine {
 
     public CoffeeMachine(int outlet) {
         System.out.println("New Machine");
-        executor = new ThreadPoolExecutor(outlet, outlet, 5000L, TimeUnit.MILLISECONDS,
+        executor = new ThreadPoolExecutor(outlet, outlet, 1000L, TimeUnit.MILLISECONDS,
             new LinkedBlockingQueue<>(MAX_QUEUED_REQUEST));
         executor.setRejectedExecutionHandler(new ErrorHandler());
     }
 
     public void fillInventory(CoffeeMachineDetails coffeeMachineDetails) {
-        InventoryManager inventoryManager = InventoryManager.getInstance();
+        IngredientManager ingredientManager = IngredientManager.getInstance();
         Map<String, Integer> ingredients = coffeeMachineDetails.getMachine().getIngredientQuantityMap();
         for (String key : ingredients.keySet()) {
-            inventoryManager.addInventory(key, ingredients.get(key));
+            ingredientManager.addInventory(key, ingredients.get(key));
         }
     }
     public void serveOrders(Map<String, HashMap<String, Integer>> beverages) {
@@ -77,12 +77,12 @@ public class CoffeeMachine {
     public void reset() {
         log.info("Resetting");
         this.stopMachine();
-        InventoryManager.getInstance().resetInventory();
+        IngredientManager.getInstance().resetInventory();
     }
 
     //Making this thread safe by synchronizing
     private boolean checkAndUpdateInventory(Beverage beverage) {
-        InventoryManager inventory = InventoryManager.getInstance();
+        IngredientManager inventory = IngredientManager.getInstance();
         Map<String, Integer> requiredIngredientMap = beverage.getIngredientQuantityMap();
         boolean isPossible = true;
 

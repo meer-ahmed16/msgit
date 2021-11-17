@@ -1,25 +1,24 @@
-package inventory;
+package ingredientInventory;
 
 import java.util.HashMap;
 import java.util.Map;
 
 /**
- * This is a thread-safe singleton implementation for an inventory management system.
- * This class takes care of handling all the inventory.
+ * Singleton design to store and manage ingredient inventory.
  */
 
-public class InventoryManager {
+public class IngredientManager {
     public Map<String, Integer> inventory = new HashMap<>();
 
-    private InventoryManager() {
+    private IngredientManager() {
     }
 
     //Using Holder pattern ensures thread safe initialisation of the object,
     private static class InventoryManagerHolder {
-        public static final InventoryManager instance = new InventoryManager();
+        public static final IngredientManager instance = new IngredientManager();
     }
 
-    public static InventoryManager getInstance() {
+    public static IngredientManager getInstance() {
         return InventoryManagerHolder.instance;
     }
 

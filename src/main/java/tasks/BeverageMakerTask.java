@@ -3,8 +3,9 @@ package tasks;
 import lombok.AllArgsConstructor;
 import model.Beverage;
 
-/**This class represents an atomic task to make any Beverage.
- * Uses Runnable interface to support multithreading */
+/**
+ * This class mimics an order to make any Beverage.
+ */
 
 @AllArgsConstructor
 public abstract class BeverageMakerTask implements Runnable {
